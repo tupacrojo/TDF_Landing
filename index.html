@@ -10,7 +10,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Estilos cargados desde css/styles.css -->
+        <!-- Estilos cargados desde css/styles.css -->
+        <!-- Inline critical CSS (fallback) para asegurar que el sitio se vea aunque haya problemas cargando el archivo externo) -->
+        <style id="inline-critical">
+            :root{--bg:#0f1720;--text:#fff;--accent:#009540;--card:#0b1410;--radius:12px}
+            html,body{height:100%;margin:0;font-family:Poppins,system-ui,Segoe UI,Arial;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+            .container{max-width:760px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center}
+            .logo{max-width:200px;margin:0 auto 12px;display:block}
+            .title{font-size:30px;margin:4px 0 6px;font-weight:600}
+            .subtitle{color:#bfc8cf;margin:0 0 18px;font-size:15px}
+            .links{width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:18px}
+            .btn{display:inline-block;padding:12px 22px;border-radius:var(--radius);text-decoration:none;color:var(--text);background:var(--card);min-width:240px;text-align:center;box-shadow:0 3px 0 rgba(0,0,0,0.18)}
+            .btn.primary{background:linear-gradient(180deg,var(--accent),#00763f)}
+            .consent-form{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:10px;display:flex;flex-direction:column;gap:8px;align-items:center;min-width:260px;max-width:640px}
+            .consent-form input[type="email"]{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+            .foot{margin-top:18px;color:#bfc8cf;font-size:13px;text-align:center}
+        </style>
     <!-- Dominio canonical -->
     <link rel="canonical" href="https://aprenderfotografia.com.ar/">
     <!-- Meta Pixel: configure PIXEL_ID in js/script.js -->
