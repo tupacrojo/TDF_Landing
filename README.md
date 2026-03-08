@@ -14,6 +14,12 @@ Pasos rápidos
 2. Configurar Pixel/endpoint: en `js/script.js` setear `PIXEL_ID` y/o `TRACKING_ENDPOINT`.
    - `PIXEL_ID`: ID del Meta Pixel para que los eventos se envíen a Facebook/Meta.
    - `TRACKING_ENDPOINT`: URL que reciba POSTs JSON con los eventos (recomendado para guardar en DB o reenviar a Conversions API).
+   
+  Nota sobre Meta Pixel y Advanced Matching:
+  - `js/script.js` ya soporta inicializar el Meta Pixel solo después de que el usuario dé su consentimiento.
+  - Si el usuario deja su email en el opt‑in, el frontend calculará un SHA‑256 del email (en minúsculas y trim) y lo enviará al Pixel como Advanced Matching (`em`) — de esta forma no se comparte el email en texto claro con Meta.
+  - Para habilitar el Pixel, poné tu Pixel ID en la constante `PIXEL_ID` dentro de `js/script.js` (p.ej. `2663900733992873`).
+  - El Pixel enviará un PageView al inicializar y eventos `link_click` como eventos personalizados para facilitar el seguimiento en Facebook Events Manager.
 3. Probar localmente: abrir `index.html` en navegador.
 
 Nota sobre servidor local
