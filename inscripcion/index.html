@@ -51,17 +51,14 @@
             <header
                 class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-6 md:px-20 py-4 sticky top-0 z-50">
                 <div class="flex items-center gap-4">
-                    <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10">
-                        <span class="material-symbols-outlined text-primary text-2xl">photo_camera</span>
+                    <div class="flex items-center justify-center size-10 rounded-lg 
+                    ">
+                        <img alt="Logo Taller de Fotografía" class="w-full h-full object-contain"
+                            data-alt="Taller de Fotografía professional camera lens logo"
+                            src="../assets/Logo taller.png" />
                     </div>
                     <h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Taller
                         de Fotografía</h2>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/30"
-                        data-alt="User profile avatar placeholder"
-                        style="background-image: url(&#34;https://lh3.googleusercontent.com/aida-public/AB6AXuC4CKfEU7xMH59GO-zfhzl1_cNRRZcmrpAP3nOB6fdkNt77Fy175XTYz0UNXsM8X3Oq-JsAjgMBG97iNthngG3_3j_hz8lNh6tO7E6ibLcQ8Zq3c6k06ANPr7WkR2zyMJULpTPCAxnRXpgUsBNRpANicpBOhAPmWd7LfxjU4hGb2tBD5GldVCKGIRmVE5AtIzAAfAdBfxCPbfFZ8dpvi8ukBeqf7bpAQ140fGFUyyZaJHkuZ31Pqh-R1dBtc9CJBavTVfFmKasrBkQ7&#34;)">
-                    </div>
                 </div>
             </header>
             <main class="flex flex-1 justify-center py-12 px-6">
@@ -69,7 +66,7 @@
                     <!-- Header Section -->
                     <div class="flex flex-col gap-4 mb-8">
                         <nav class="flex items-center gap-2 text-sm text-primary font-medium">
-                            <span>Cursos</span>
+                            <a href="/cursos">Cursos</a>
                             <span class="material-symbols-outlined text-sm">chevron_right</span>
                             <span class="text-slate-500 dark:text-slate-400">Inscripción</span>
                         </nav>
@@ -103,7 +100,7 @@
                                         placeholder="ejemplo@correo.com" required type="email" />
                                 </div>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 gap-6">
                                 <!-- Phone -->
                                 <div class="flex flex-col gap-2">
                                     <label for="phone"
@@ -111,18 +108,6 @@
                                     <input id="phone" name="phone"
                                         class="w-full rounded-lg border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary h-12 px-4 text-base transition-all"
                                         placeholder="+54 9 11 2345 6789" required type="tel" />
-                                </div>
-                                <!-- Start Date -->
-                                <div class="flex flex-col gap-2">
-                                    <label for="startDate"
-                                        class="text-slate-800 dark:text-slate-200 text-sm font-semibold">Fecha de
-                                        inicio</label>
-                                    <select id="startDate" name="startDate"
-                                        class="w-full rounded-lg border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary h-12 px-4 text-base transition-all">
-                                        <option disabled selected value="">Selecciona una fecha</option>
-                                        <option value="marzo">Marzo 2024</option>
-                                        <option value="agosto">Agosto 2024</option>
-                                    </select>
                                 </div>
                             </div>
                             <!-- Message/Comments -->
@@ -176,21 +161,23 @@
             <footer class="border-t border-slate-200 bg-white py-10 px-6 md:px-20 mt-10">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                     <div class="flex items-center gap-3">
-                        <div class="size-8 rounded bg-primary flex items-center justify-center">
-                            <span class="material-symbols-outlined text-white text-lg">photo_camera</span>
+                        <div class="size-8 rounded flex items-center justify-center">
+                            <img alt="Logo Taller de Fotografía" class="w-full h-full object-contain"
+                                data-alt="Taller de Fotografía professional camera lens logo"
+                                src="../assets/Logo taller.png" />
                         </div>
                         <span class="font-bold text-slate-900">Taller de Fotografía</span>
                     </div>
                     <div class="flex gap-8 text-slate-500 dark:text-slate-400 text-sm font-medium">
-                        <a class="hover:text-primary transition-colors" href="#">Cursos</a>
-                        <a class="hover:text-primary transition-colors" href="#">Galería</a>
-                        <a class="hover:text-primary transition-colors" href="#">Sobre nosotros</a>
-                        <a class="hover:text-primary transition-colors" href="#">Contacto</a>
+                        <a class="hover:text-primary transition-colors" href="/cursos">Cursos</a>
+                        <!-- <a class="hover:text-primary transition-colors" href="#">Galería</a> -->
+                        <!-- <a class="hover:text-primary transition-colors" href="#">Sobre nosotros</a> -->
+                        <!-- <a class="hover:text-primary transition-colors" href="#">Contacto</a> -->
                     </div>
                 </div>
                 <div
                     class="mt-8 pt-8 border-t border-slate-200 dark:border-primary/5 text-center text-xs text-slate-400">
-                    © 2024 Taller de Fotografía. Todos los derechos reservados.
+                    © 2026 Taller de Fotografía. Todos los derechos reservados.
                 </div>
             </footer>
         </div>
@@ -209,7 +196,6 @@
                         name: document.getElementById('fullName').value.trim(),
                         email: document.getElementById('emailIns').value.trim(),
                         phone: document.getElementById('phone').value.trim(),
-                        startDate: document.getElementById('startDate').value,
                         message: document.getElementById('message').value.trim(),
                         source: location.href,
                         userAgent: navigator.userAgent,
