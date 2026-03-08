@@ -24,11 +24,13 @@ async function sha256Hex(str) {
     const s = str.trim().toLowerCase();
     if (window.crypto && window.crypto.subtle && window.TextEncoder) {
       const data = new TextEncoder().encode(s);
-      const hash = await window.crypto.subtle.digest('SHA-256', data);
-      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+      const hash = await window.crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(hash))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
     }
   } catch (e) {
-    console.warn('No se pudo hashear el email:', e);
+    console.warn("No se pudo hashear el email:", e);
   }
   return null;
 }
@@ -45,26 +47,31 @@ function initMetaPixel(id, hashedEmail) {
     if (!f._fbq) f._fbq = n;
     n.push = n;
     n.loaded = !0;
-    n.version = '2.0';
+    n.version = "2.0";
     n.queue = [];
     t = b.createElement(e);
     t.async = !0;
     t.src = v;
     s = b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t, s);
-  })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+  })(
+    window,
+    document,
+    "script",
+    "https://connect.facebook.net/en_US/fbevents.js",
+  );
 
   try {
     if (hashedEmail) {
       // Advanced Matching: enviar email hasheado
-      window.fbq('init', id, { em: hashedEmail });
+      window.fbq("init", id, { em: hashedEmail });
     } else {
-      window.fbq('init', id);
+      window.fbq("init", id);
     }
     // Track a PageView inmediatamente al inicializar
-    window.fbq && window.fbq('track', 'PageView');
+    window.fbq && window.fbq("track", "PageView");
   } catch (e) {
-    console.warn('Error inicializando Meta Pixel', e);
+    console.warn("Error inicializando Meta Pixel", e);
   }
 }
 
@@ -116,9 +123,9 @@ function hasConsent() {
 }
 
 function setConsent(value, email = null) {
-  localStorage.setItem('tdf_consent', value ? 'yes' : 'no');
+  localStorage.setItem("tdf_consent", value ? "yes" : "no");
   // guardamos el email hasheado (si se provee) para advanced matching
-  if (email) localStorage.setItem('tdf_email_hashed', email);
+  if (email) localStorage.setItem("tdf_email_hashed", email);
 }
 
 // Adjuntar tracking a enlaces (se ejecuta cuando hay consentimiento o para logs locales)
@@ -129,10 +136,10 @@ function attachClickTracking() {
       // enviar evento sólo si tenemos consentimiento, si no, guardamos localmente
       const payload = { link };
       // si tenemos email hasheado en el storage, incluirlo para matching (no enviamos email en claro)
-      try{
-        const hashed = localStorage.getItem('tdf_email_hashed');
-        if(hashed) payload.email = hashed;
-      }catch(e){}
+      try {
+        const hashed = localStorage.getItem("tdf_email_hashed");
+        if (hashed) payload.email = hashed;
+      } catch (e) {}
       if (hasConsent()) {
         // opcional: intentar obtener geolocalización (bajo permiso)
         try {
@@ -178,35 +185,41 @@ function setupConsentForm() {
 
   // Si ya dio consentimiento, ocultamos banner y re-inicializamos Pixel con el email hasheado si existe
   if (hasConsent()) {
-    consentEl.style.display = 'none';
-    (async function(){
-      try{
-        const hashed = localStorage.getItem('tdf_email_hashed') || null;
+    consentEl.style.display = "none";
+    (async function () {
+      try {
+        const hashed = localStorage.getItem("tdf_email_hashed") || null;
         initMetaPixel(PIXEL_ID, hashed);
-        sendTrackingEvent('page_view', { email: hashed });
-      }catch(e){ console.warn(e) }
+        sendTrackingEvent("page_view", { email: hashed });
+      } catch (e) {
+        console.warn(e);
+      }
       attachClickTracking();
     })();
     return;
   }
-  form.addEventListener('submit', async (ev) => {
+  form.addEventListener("submit", async (ev) => {
     ev.preventDefault();
-    const emailRaw = document.getElementById('email').value || null;
-    const checked = document.getElementById('consentCheckbox').checked;
+    const emailRaw = document.getElementById("email").value || null;
+    const checked = document.getElementById("consentCheckbox").checked;
     if (!checked) {
-      alert('Debes aceptar para continuar con el seguimiento.');
+      alert("Debes aceptar para continuar con el seguimiento.");
       return;
     }
     // calcular hash del email (si existe)
     let hashed = null;
     if (emailRaw) {
-      try { hashed = await sha256Hex(emailRaw); } catch(e){ hashed = null; }
+      try {
+        hashed = await sha256Hex(emailRaw);
+      } catch (e) {
+        hashed = null;
+      }
     }
     setConsent(true, hashed);
     // enviar evento de opt-in (no enviamos email en texto claro)
-    sendTrackingEvent('consent_given', { email: hashed });
+    sendTrackingEvent("consent_given", { email: hashed });
     initMetaPixel(PIXEL_ID, hashed);
-    consentEl.style.display = 'none';
+    consentEl.style.display = "none";
     attachClickTracking();
   });
 
