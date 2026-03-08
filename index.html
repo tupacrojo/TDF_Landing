@@ -19,19 +19,19 @@
     data-tracking-endpoint="https://script.google.com/macros/s/AKfycbxRYHHQH0VxrbnCnF2X9mRdIdhw9qAhwbg1DhwhPMDMLn9sNrP4UvNEvUQxcStMUvtC/exec">
     <!-- Redirects desde dominios alternativos al dominio principal -->
     <script>
-      (function(){
-        try {
-          const host = location.hostname.replace(/^www\./i,'').toLowerCase();
-          const primary = 'aprenderfotografia.com.ar';
-          const aliases = ['aprendefotografia.com.ar','apredefotografia.com.ar'];
-          if (aliases.includes(host) && host !== primary) {
-            // redirige conservando path y query
-            const target = location.href.replace(host, primary);
-            // usa replace para no dejar historia de redirect
-            location.replace(target);
-          }
-        } catch(e){}
-      })();
+        (function () {
+            try {
+                const host = location.hostname.replace(/^www\./i, '').toLowerCase();
+                const primary = 'aprenderfotografia.com.ar';
+                const aliases = ['aprendefotografia.com.ar', 'apredefotografia.com.ar'];
+                if (aliases.includes(host) && host !== primary) {
+                    // redirige conservando path y query
+                    const target = location.href.replace(host, primary);
+                    // usa replace para no dejar historia de redirect
+                    location.replace(target);
+                }
+            } catch (e) { }
+        })();
     </script>
     <main class="container">
         <header class="hero">
@@ -51,10 +51,6 @@
             <a class="btn" data-link="https://www.instagram.com/tallerdefotografia_jr/"
                 href="https://www.instagram.com/tallerdefotografia_jr/" target="_blank"
                 rel="noopener noreferrer">Instagram</a>
-            <a class="btn" data-link="https://aprenderfotografia.com.ar" href="https://aprenderfotografia.com.ar"
-                target="_blank" rel="noopener noreferrer">aprenderfotografia.com.ar</a>
-            <a class="btn" data-link="https://aprendefotografia.com.ar" href="https://aprendefotografia.com.ar"
-                target="_blank" rel="noopener noreferrer">apredefotografia.com.ar</a>
         </section>
 
         <!-- Banner de consentimiento / opt-in -->
