@@ -1,187 +1,201 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html class="dark" lang="es">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>TDF — Links</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Taller de Fotografía - Enlaces</title>
     <meta name="description" content="Enlaces oficiales - Taller de Fotografía" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Estilos cargados desde css/styles.css -->
-    <!-- Inline critical CSS (fallback) para asegurar que el sitio se vea aunque haya problemas cargando el archivo externo) -->
-    <style id="inline-critical">
-        :root {
-            --bg: #2a3129;
-            --card: #06431b;
-            --text: #ffffff;
-            --muted: #bfc8cf;
-            --accent: #009540;
-            --radius: 12px;
-            --maxw: 760px;
-        }
 
+    <!-- Tailwind CDN (dev-friendly). En producción preferir compilar CSS y referenciarlo localmente -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Google Fonts / Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind config (inline) -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#009440",
+                        "background-light": "#f5f8f7",
+                        "background-dark": "#0f2318",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Small inline fallback styles to keep layout readable if Tailwind/CDN fails -->
+    <style>
         html,
         body {
             height: 100%;
             margin: 0;
-            font-family: Poppins, system-ui, Segoe UI, Arial;
-            background: var(--bg);
-            color: var(--text);
-            -webkit-font-smoothing: antialiased
+            font-family: Inter, system-ui, Segoe UI, Arial;
+            background: #f5f8f7;
+            color: #0f2318
         }
 
-        .container {
-            max-width: 760px;
-            margin: 0 auto;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            text-align: center
+        .layout-container {
+            max-width: 960px;
+            margin: 0 auto
         }
 
-        .logo {
-            max-width: 200px;
-            margin: 0 auto 12px;
-            display: block
-        }
-
-        .title {
-            font-size: 30px;
-            margin: 4px 0 6px;
-            font-weight: 600
-        }
-
-        .subtitle {
-            color: #bfc8cf;
-            margin: 0 0 18px;
-            font-size: 15px
-        }
-
-        .links {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 18px
-        }
-
-        .btn {
+        .btn-fallback {
             display: inline-block;
-            padding: 12px 22px;
-            border-radius: var(--radius);
-            text-decoration: none;
-            color: var(--text);
-            background: var(--card);
-            min-width: 240px;
-            text-align: center;
-            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.18)
-        }
-
-        .btn.primary {
-            background: linear-gradient(180deg, var(--accent), #00763f)
-        }
-
-        .consent-form {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            padding: 14px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: center;
-            min-width: 260px;
-            max-width: 640px
-        }
-
-        .consent-form input[type="email"] {
-            padding: 8px 10px;
+            padding: 10px 16px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            background: transparent;
-            color: var(--text)
-        }
-
-        .foot {
-            margin-top: 18px;
-            color: #bfc8cf;
-            font-size: 13px;
-            text-align: center
+            background: #009440;
+            color: #fff;
+            text-decoration: none
         }
     </style>
-    <!-- Dominio canonical -->
-    <link rel="canonical" href="https://aprenderfotografia.com.ar/">
-    <!-- Meta Pixel: configure PIXEL_ID in js/script.js -->
 </head>
 
-<body
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen"
     data-tracking-endpoint="https://script.google.com/macros/s/AKfycbxRYHHQH0VxrbnCnF2X9mRdIdhw9qAhwbg1DhwhPMDMLn9sNrP4UvNEvUQxcStMUvtC/exec">
-    <!-- Redirects desde dominios alternativos al dominio principal -->
-    <script>
-        (function () {
-            try {
-                const host = location.hostname.replace(/^www\./i, '').toLowerCase();
-                const primary = 'aprenderfotografia.com.ar';
-                const aliases = ['aprendefotografia.com.ar', 'apredefotografia.com.ar'];
-                if (aliases.includes(host) && host !== primary) {
-                    // redirige conservando path y query
-                    const target = location.href.replace(host, primary);
-                    // usa replace para no dejar historia de redirect
-                    location.replace(target);
-                }
-            } catch (e) { }
-        })();
-    </script>
-    <main class="container">
-        <header class="hero">
-            <!-- Preferimos usar un logo local en assets/logo.png; si no existe, mostramos el logo remoto -->
-            <picture>
-                <img src="assets/logo.png"
-                    onerror="this.onerror=null;this.src='https://www.tallerdefotografia.com.ar/images/logo_blanco.png'"
-                    alt="Taller de Fotografía" class="logo" id="logo">
-            </picture>
-            <h1 class="title">Taller de Fotografía</h1>
-            <p class="subtitle">Aprendé fotografía — recursos y contactos</p>
-        </header>
 
-        <section class="links" id="links">
-            <a class="btn primary" data-link="https://wa.me/5492235217648" href="https://wa.me/5492235217648"
-                target="_blank" rel="noopener noreferrer">WhatsApp</a>
-            <a class="btn" data-link="https://www.instagram.com/tallerdefotografia_jr/"
-                href="https://www.instagram.com/tallerdefotografia_jr/" target="_blank"
-                rel="noopener noreferrer">Instagram</a>
-        </section>
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
 
-        <!-- Banner de consentimiento / opt-in -->
-        <div id="consent" class="consent">
-            <form id="consentForm" class="consent-form">
-                <label for="email">Recibí novedades por email (opcional)</label>
-                <input id="email" name="email" type="email" placeholder="tu@correo.com" />
-                <div class="consent-row">
-                    <label><input id="consentCheckbox" type="checkbox" /> Acepto recibir comunicaciones y doy
-                        consentimiento para registrar mi visita.</label>
+            <header class="flex items-center justify-between border-b border-primary/10 px-6 py-4 md:px-40">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white">
+                        <span class="material-symbols-outlined text-xl">photo_camera</span>
+                    </div>
+                    <h2 class="text-lg font-bold tracking-tight">Taller de Fotografía</h2>
                 </div>
-                <div class="consent-actions">
-                    <button type="submit" class="btn primary">Aceptar y continuar</button>
-                    <button type="button" id="skipTracking" class="btn">Continuar sin aceptarlo</button>
+                <button
+                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors">
+                    <span class="material-symbols-outlined text-primary">share</span>
+                </button>
+            </header>
+
+            <main class="flex flex-1 flex-col items-center px-6 py-12 md:px-40">
+                <div class="w-full max-w-[480px] flex flex-col items-center gap-8">
+
+                    <div class="flex flex-col items-center gap-4 text-center">
+                        <div class="flex items-center justify-center w-full mb-4">
+                            <!-- logo: preferimos usar assets/logo.png si existe -->
+                            <img alt="Taller de Fotografía Logo" class="h-auto max-w-[240px] object-contain"
+                                src="assets/logo.png"
+                                onerror="this.onerror=null;this.src='https://www.tallerdefotografia.com.ar/images/logo_blanco.png'" />
+                        </div>
+
+                        <div class="space-y-1">
+                            <h1 class="text-3xl font-extrabold tracking-tight">Taller de Fotografía</h1>
+                            <p class="text-slate-500 dark:text-primary/70 text-lg font-medium">Aprendé fotografía —
+                                recursos y contactos</p>
+                        </div>
+                    </div>
+
+                    <!-- Banner de consentimiento / opt-in (IDs compatibles con js/script.js) -->
+                    <div id="consent" class="w-full flex justify-center mt-2">
+                        <form id="consentForm"
+                            class="consent-form bg-white/5 p-4 rounded-lg w-full max-w-md flex flex-col gap-3 items-center">
+                            <label for="email" class="text-sm text-slate-300">Recibí novedades por email
+                                (opcional)</label>
+                            <input id="email" name="email" type="email" placeholder="tu@correo.com"
+                                class="w-full p-2 rounded-md bg-transparent border border-slate-700 text-slate-100" />
+                            <div class="consent-row text-sm text-slate-400 flex items-center gap-2">
+                                <label class="flex items-center gap-2"><input id="consentCheckbox" type="checkbox" />
+                                    Acepto recibir comunicaciones y doy consentimiento para registrar mi visita.</label>
+                            </div>
+                            <div class="consent-actions flex gap-3">
+                                <button type="submit"
+                                    class="group flex items-center justify-center h-10 px-4 rounded-xl bg-primary text-white font-bold">Aceptar
+                                    y continuar</button>
+                                <button type="button" id="skipTracking"
+                                    class="group flex items-center justify-center h-10 px-4 rounded-xl border border-primary/30 text-primary">Continuar
+                                    sin aceptarlo</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="flex w-full flex-col gap-4 mt-2">
+
+                        <a class="group flex items-center justify-between w-full h-14 px-6 rounded-xl bg-primary text-white font-bold text-base transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                            href="https://wa.me/5492235217648" data-link="https://wa.me/5492235217648" target="_blank"
+                            rel="noopener noreferrer">
+                            <span class="flex items-center gap-3"><span class="material-symbols-outlined">chat</span>
+                                WhatsApp</span>
+                            <span
+                                class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+                        </a>
+
+                        <a class="group flex items-center justify-between w-full h-14 px-6 rounded-xl border-2 border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary font-bold text-base transition-all"
+                            href="https://www.instagram.com/tallerdefotografia_jr/"
+                            data-link="https://www.instagram.com/tallerdefotografia_jr/" target="_blank"
+                            rel="noopener noreferrer">
+                            <span class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined">camera_enhance</span> Instagram</span>
+                            <span
+                                class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+                        </a>
+
+                        <a class="group flex items-center justify-between w-full h-14 px-6 rounded-xl bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-100 font-bold text-base transition-all"
+                            href="https://aprenderfotografia.com.ar/cursos"
+                            data-link="https://aprenderfotografia.com.ar/cursos" target="_blank"
+                            rel="noopener noreferrer">
+                            <span class="flex items-center gap-3"><span
+                                    class="material-symbols-outlined">menu_book</span> Nuestros Cursos</span>
+                            <span
+                                class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+                        </a>
+
+                        <a class="group relative flex items-center justify-between w-full h-14 px-6 rounded-xl bg-primary text-white font-bold text-base transition-transform hover:scale-[1.02] active:scale-[0.98] overflow-hidden"
+                            href="https://aprenderfotografia.com.ar/inscripciones"
+                            data-link="https://aprenderfotografia.com.ar/inscripciones" target="_blank"
+                            rel="noopener noreferrer">
+                            <div
+                                class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out">
+                            </div>
+                            <span class="flex items-center gap-3 relative z-10"><span
+                                    class="material-symbols-outlined">campaign</span> Inscripciones Abiertas</span>
+                            <span
+                                class="relative z-10 px-2 py-0.5 bg-white text-primary text-[10px] uppercase tracking-widest rounded-full">New</span>
+                        </a>
+
+                    </div>
+
+                    <div class="flex gap-6 mt-4">
+                        <!-- <a class="text-primary hover:text-primary/80 transition-colors" href="#"><span
+                                class="material-symbols-outlined">mail</span></a> -->
+                        <!-- <a class="text-primary hover:text-primary/80 transition-colors" href="#"><span
+                                class="material-symbols-outlined">map</span></a> -->
+                        <!-- <a class="text-primary hover:text-primary/80 transition-colors" href="#"><span
+                                class="material-symbols-outlined">language</span></a> -->
+                    </div>
+
                 </div>
-            </form>
+            </main>
+
+            <footer class="flex flex-col gap-4 px-6 py-12 text-center border-t border-primary/10">
+                <div class="flex flex-wrap items-center justify-center gap-8">
+                    <a class="text-slate-500 dark:text-primary/60 text-sm font-medium hover:text-primary transition-colors"
+                        href="#">Privacidad</a>
+                    <a class="text-slate-500 dark:text-primary/60 text-sm font-medium hover:text-primary transition-colors"
+                        href="#">Términos</a>
+                </div>
+                <p class="text-slate-400 dark:text-primary/40 text-xs md:text-sm">© 2026 Taller de Fotografía — Usá
+                    estos enlaces para contactarnos.</p>
+            </footer>
+
         </div>
+    </div>
 
-        <footer class="foot">
-            <small>© Taller de Fotografía — Usá estos enlaces para contactarnos.</small>
-        </footer>
-    </main>
-
-    <!-- Si quieres usar un webhook público (Zapier, Formspree, Apps Script), puedes editar este atributo
-         en GitHub: <body data-tracking-endpoint="https://hooks.zapier.com/hooks/catch/...">
-         Dejar vacío para no enviar eventos. -->
+    <!-- Script que maneja consentimiento, pixel y envío al webhook -->
     <script src="js/script.js"></script>
 </body>
 
