@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TDF — Links</title>
+    <meta name="description" content="Enlaces oficiales - Taller de Fotografía" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Dominio canonical -->
+    <link rel="canonical" href="https://aprenderfotografia.com.ar/">
+    <!-- Meta Pixel: configure PIXEL_ID in js/script.js -->
+</head>
+
+<body
+    data-tracking-endpoint="https://script.google.com/macros/s/AKfycbxRYHHQH0VxrbnCnF2X9mRdIdhw9qAhwbg1DhwhPMDMLn9sNrP4UvNEvUQxcStMUvtC/exec">
+    <!-- Redirects desde dominios alternativos al dominio principal -->
+    <script>
+      (function(){
+        try {
+          const host = location.hostname.replace(/^www\./i,'').toLowerCase();
+          const primary = 'aprenderfotografia.com.ar';
+          const aliases = ['aprendefotografia.com.ar','apredefotografia.com.ar'];
+          if (aliases.includes(host) && host !== primary) {
+            // redirige conservando path y query
+            const target = location.href.replace(host, primary);
+            // usa replace para no dejar historia de redirect
+            location.replace(target);
+          }
+        } catch(e){}
+      })();
+    </script>
+    <main class="container">
+        <header class="hero">
+            <!-- Preferimos usar un logo local en assets/logo.png; si no existe, mostramos el logo remoto -->
+            <picture>
+                <img src="assets/logo.png"
+                    onerror="this.onerror=null;this.src='https://www.tallerdefotografia.com.ar/images/logo_blanco.png'"
+                    alt="Taller de Fotografía" class="logo" id="logo">
+            </picture>
+            <h1 class="title">Taller de Fotografía</h1>
+            <p class="subtitle">Aprendé fotografía — recursos y contactos</p>
+        </header>
+
+        <section class="links" id="links">
+            <a class="btn primary" data-link="https://wa.me/5492235217648" href="https://wa.me/5492235217648"
+                target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a class="btn" data-link="https://www.instagram.com/tallerdefotografia_jr/"
+                href="https://www.instagram.com/tallerdefotografia_jr/" target="_blank"
+                rel="noopener noreferrer">Instagram</a>
+            <a class="btn" data-link="https://aprenderfotografia.com.ar" href="https://aprenderfotografia.com.ar"
+                target="_blank" rel="noopener noreferrer">aprenderfotografia.com.ar</a>
+            <a class="btn" data-link="https://aprendefotografia.com.ar" href="https://aprendefotografia.com.ar"
+                target="_blank" rel="noopener noreferrer">apredefotografia.com.ar</a>
+        </section>
+
+        <!-- Banner de consentimiento / opt-in -->
+        <div id="consent" class="consent">
+            <form id="consentForm" class="consent-form">
+                <label for="email">Recibí novedades por email (opcional)</label>
+                <input id="email" name="email" type="email" placeholder="tu@correo.com" />
+                <div class="consent-row">
+                    <label><input id="consentCheckbox" type="checkbox" /> Acepto recibir comunicaciones y doy
+                        consentimiento para registrar mi visita.</label>
+                </div>
+                <div class="consent-actions">
+                    <button type="submit" class="btn primary">Aceptar y continuar</button>
+                    <button type="button" id="skipTracking" class="btn">Continuar sin aceptarlo</button>
+                </div>
+            </form>
+        </div>
+
+        <footer class="foot">
+            <small>© Taller de Fotografía — Usá estos enlaces para contactarnos.</small>
+        </footer>
+    </main>
+
+    <!-- Si quieres usar un webhook público (Zapier, Formspree, Apps Script), puedes editar este atributo
+         en GitHub: <body data-tracking-endpoint="https://hooks.zapier.com/hooks/catch/...">
+         Dejar vacío para no enviar eventos. -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
