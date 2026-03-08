@@ -16,24 +16,11 @@ Pasos rápidos
    - `TRACKING_ENDPOINT`: URL que reciba POSTs JSON con los eventos (recomendado para guardar en DB o reenviar a Conversions API).
 3. Probar localmente: abrir `index.html` en navegador.
 
-Servidor local de ejemplo (guardar eventos)
+Nota sobre servidor local
 
-Para pruebas locales puedes levantar el servidor que viene en `server/track_server.js`:
+Este proyecto está pensado para funcionar como sitio estático en GitHub Pages. Inicialmente incluimos un ejemplo de servidor local (`server/track_server.js`) para pruebas, pero si vas a usar la opción A (Google Apps Script) o cualquier webhook público no necesitás ese servidor. Por claridad, el ejemplo de servidor local fue eliminado del repositorio en esta versión.
 
-1. En la raíz del proyecto inicializa npm y instala dependencias:
-
-```bash
-npm init -y
-npm install express body-parser
-```
-
-2. Ejecuta el servidor de tracking:
-
-```bash
-node server/track_server.js
-```
-
-Por defecto el script del frontend (`js/script.js`) apunta a `http://localhost:3030/track` como `TRACKING_ENDPOINT`.
+Si preferís mantener una opción local o migrar más adelante a serverless, en el repo existe `server/` como referencia histórica (si lo necesitás pide que lo restaure) o podés convertir fácilmente la lógica a una función para Netlify/Vercel.
 
 Descargar logo automáticamente
 

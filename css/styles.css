@@ -1,6 +1,6 @@
 :root{
-  --bg: #0f1720;         /* fondo oscuro similar al site */
-  --card: #0b1410;       /* tarjeta / botón base (ajustado para contraste con verde) */
+  --bg: #2a3129;         /* fondo oscuro similar al site */
+  --card: #06431b;       /* tarjeta / botón base (ajustado para contraste con verde) */
   --text: #ffffff;       /* texto principal */
   --muted: #bfc8cf;      /* texto secundario */
   --accent: #009540;     /* verde del Taller solicitado */
