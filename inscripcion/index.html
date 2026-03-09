@@ -49,7 +49,7 @@
         <div class="layout-container flex h-full grow flex-col">
             <!-- Top Navigation Bar -->
             <header
-                class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-6 md:px-20 py-4 sticky top-0 z-50">
+                class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-4 sm:px-6 md:px-20 py-4 sticky top-0 z-50">
                 <div class="flex items-center gap-4">
                     <div class="flex items-center justify-center size-10 rounded-lg 
                     ">
@@ -71,9 +71,9 @@
                             <span class="text-slate-500 dark:text-slate-400">Inscripción</span>
                         </nav>
                         <div class="flex flex-col gap-2">
-                            <h1 class="text-slate-900 text-4xl md:text-5xl font-black leading-tight tracking-tighter">
+                            <h1 class="text-slate-900 text-2xl sm:text-3xl md:text-5xl font-black leading-tight tracking-tighter">
                                 Formulario de Inscripción</h1>
-                            <p class="text-slate-600 text-lg font-normal">Curso Integral de Fotografía - Reserva tu
+                            <p class="text-slate-600 text-base sm:text-lg font-normal">Curso Integral de Fotografía - Reserva tu
                                 lugar ahora</p>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                                         class="text-slate-800 dark:text-slate-200 text-sm font-semibold">Nombre
                                         completo</label>
                                     <input id="fullName" name="fullName"
-                                        class="w-full rounded-lg border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary h-12 px-4 text-base transition-all"
+                                        class="w-full rounded-lg border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary h-10 sm:h-12 px-4 text-base transition-all"
                                         placeholder="Ej: Juan Pérez" required type="text" />
                                 </div>
                                 <!-- Email -->
@@ -96,7 +96,7 @@
                                         class="text-slate-800 dark:text-slate-200 text-sm font-semibold">Correo
                                         electrónico</label>
                                     <input id="emailIns" name="email"
-                                        class="w-full rounded-lg border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary h-12 px-4 text-base transition-all"
+                                        class="w-full rounded-lg border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary h-10 sm:h-12 px-4 text-base transition-all"
                                         placeholder="ejemplo@correo.com" required type="email" />
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                     <label for="phone"
                                         class="text-slate-800 dark:text-slate-200 text-sm font-semibold">Teléfono</label>
                                     <input id="phone" name="phone"
-                                        class="w-full rounded-lg border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary h-12 px-4 text-base transition-all"
+                                        class="w-full rounded-lg border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary h-10 sm:h-12 px-4 text-base transition-all"
                                         placeholder="+54 9 11 2345 6789" required type="tel" />
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                             <!-- Submit Button -->
                             <div class="pt-4 flex flex-col gap-4">
                                 <button id="submitBtn"
-                                    class="group flex w-full items-center justify-center gap-2 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold h-14 text-lg transition-all shadow-lg shadow-primary/20 active:scale-[0.98]"
+                                    class="group flex w-full items-center justify-center gap-2 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold h-12 sm:h-14 text-base sm:text-lg transition-all shadow-lg shadow-primary/20 active:scale-[0.98]"
                                     type="submit">
                                     <span class="material-symbols-outlined">send</span>
                                     Enviar Inscripción
