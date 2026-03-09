@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+    <!-- Fondo verde similar al adjunto -->
+    <rect width="100%" height="100%" fill="#158C2B" />
+    <!-- Rectángulo negro centrado -->
+    <rect x="160" y="160" width="192" height="128" fill="#000000" />
+</svg>
