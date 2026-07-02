@@ -30,6 +30,27 @@
                 },
             },
         }</script>
+
+    <!-- Meta Pixel Base Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init','2663900733992873');
+        fbq('track','PageView');
+        fbq('track','ViewContent',{
+            content_name:'Curso Integral de Fotografía',
+            content_category:'Cursos',
+            content_ids:['curso-integral-fotografia'],
+            content_type:'product'
+        });
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=2663900733992873&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- Fin Meta Pixel Base Code -->
 </head>
 
 <body class="bg-slate-50 font-display text-slate-900 antialiased">
@@ -296,7 +317,7 @@
                         <p class="text-white/90 text-lg max-w-2xl mb-10">Inscripciones abiertas.</br> Cupos limitados
                             para garantizar una enseñanza personalizada.</p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="/inscripcion"
+                            <a href="/inscripcion" id="ctaReservar"
                                 class="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:shadow-xl transition-all">
                                 Reservar mi Vacante
                             </a>
@@ -366,6 +387,22 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        // Meta Pixel: InitiateCheckout al hacer click en CTA
+        var ctaReservar = document.getElementById('ctaReservar');
+        if (ctaReservar) {
+            ctaReservar.addEventListener('click', function() {
+                if (window.fbq) {
+                    fbq('track', 'InitiateCheckout', {
+                        content_name: 'Curso Integral de Fotografía',
+                        content_ids: ['curso-integral-fotografia'],
+                        num_items: 1
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

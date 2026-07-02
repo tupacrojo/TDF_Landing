@@ -112,7 +112,28 @@ function sendTrackingEvent(name, payload = {}) {
   // También enviar evento a Meta Pixel si está definido
   if (window.fbq) {
     try {
-      window.fbq("trackCustom", name, { link: payload.link || null });
+      const link = payload.link || "";
+      // Mapear a eventos estándar de Meta para mejor optimización de campañas
+      if (link.includes("wa.me") || link.includes("whatsapp")) {
+        window.fbq("track", "Contact", { content_name: "WhatsApp" });
+      } else if (link.includes("inscripcion")) {
+        window.fbq("track", "InitiateCheckout", {
+          content_name: "Curso Integral de Fotografía",
+          content_ids: ["curso-integral-fotografia"],
+          num_items: 1,
+        });
+      } else if (link.includes("cursos")) {
+        window.fbq("track", "ViewContent", {
+          content_name: "Cursos de Fotografía",
+          content_category: "Cursos",
+          content_ids: ["cursos-fotografia"],
+          content_type: "product",
+        });
+      } else if (link.includes("instagram.com")) {
+        window.fbq("track", "Contact", { content_name: "Instagram" });
+      } else {
+        window.fbq("trackCustom", name, { link: link || null });
+      }
     } catch (e) {}
   }
 }

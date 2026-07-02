@@ -98,6 +98,27 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
+
+    <!-- Meta Pixel Base Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init','2663900733992873');
+        fbq('track','PageView');
+        fbq('track','ViewContent',{
+            content_name:'Inscripción - Curso Integral de Fotografía',
+            content_category:'Inscripcion',
+            content_ids:['curso-integral-fotografia'],
+            content_type:'product'
+        });
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=2663900733992873&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- Fin Meta Pixel Base Code -->
 </head>
 
 <body class="bg-background-light text-slate-900 font-display transition-colors duration-300">
@@ -243,17 +264,32 @@
 
     <script>
             (function () {
+                const PIXEL_ID = '2663900733992873';
                 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxRYHHQH0VxrbnCnF2X9mRdIdhw9qAhwbg1DhwhPMDMLn9sNrP4UvNEvUQxcStMUvtC/exec';
                 const form = document.getElementById('inscripcionForm');
                 const msg = document.getElementById('formMsg');
+
+                // SHA-256 helper para Advanced Matching
+                async function sha256Hex(str) {
+                    if (!str) return null;
+                    try {
+                        const s = str.trim().toLowerCase();
+                        const data = new TextEncoder().encode(s);
+                        const hash = await crypto.subtle.digest('SHA-256', data);
+                        return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+                    } catch(e) { return null; }
+                }
+
                 form.addEventListener('submit', async function (ev) {
                     ev.preventDefault();
+                    const emailRaw = document.getElementById('emailIns').value.trim();
+                    const phoneRaw = document.getElementById('phone').value.trim().replace(/\D/g, '');
                     const data = {
                         event: 'inscripcion',
                         timestamp: new Date().toISOString(),
                         name: document.getElementById('fullName').value.trim(),
-                        email: document.getElementById('emailIns').value.trim(),
-                        phone: document.getElementById('phone').value.trim(),
+                        email: emailRaw,
+                        phone: phoneRaw,
                         message: document.getElementById('message').value.trim(),
                         source: location.href,
                         userAgent: navigator.userAgent,
@@ -271,6 +307,23 @@
                         if (json && json.status === 'ok') {
                             msg.textContent = 'Inscripción enviada. Gracias — te contactaremos pronto.';
                             form.reset();
+                            // Disparar evento Lead con Advanced Matching
+                            if (window.fbq) {
+                                try {
+                                    const hashedEmail = await sha256Hex(emailRaw);
+                                    const hashedPhone = await sha256Hex(phoneRaw);
+                                    const userData = {};
+                                    if (hashedEmail) userData.em = hashedEmail;
+                                    if (hashedPhone) userData.ph = hashedPhone;
+                                    // Actualizar Advanced Matching con datos del usuario
+                                    fbq('init', PIXEL_ID, userData);
+                                    fbq('track', 'Lead', {
+                                        content_name: 'Curso Integral de Fotografía',
+                                        content_category: 'Inscripcion',
+                                        content_ids: ['curso-integral-fotografia']
+                                    });
+                                } catch(e) {}
+                            }
                         } else {
                             msg.textContent = 'Ocurrió un problema al enviar. Por favor, intentá de nuevo.';
                         }
