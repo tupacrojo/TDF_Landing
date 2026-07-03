@@ -36,7 +36,7 @@
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return; n = f.fbq = function () {
                 n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             }; if (!f._fbq) f._fbq = n;
             n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
             t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
@@ -72,10 +72,10 @@
             <nav class="hidden md:flex flex-1 justify-center gap-8">
             </nav>
             <div class="flex items-center gap-4">
-                <button
+                <a href="/inscripcion"
                     class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold transition-all hover:brightness-110">
                     Inscribirse
-                </button>
+                </a>
             </div>
         </header>
         <main class="flex flex-1 flex-col items-center">
