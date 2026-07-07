@@ -200,7 +200,8 @@ function setupNewsletterForm() {
   form.addEventListener("submit", (ev) => {
     ev.preventDefault();
     const emailInput = document.getElementById("email");
-    const email = emailInput && emailInput.value ? emailInput.value.trim() : null;
+    const email =
+      emailInput && emailInput.value ? emailInput.value.trim() : null;
     if (!email) return;
     localStorage.setItem("tdf_email", email);
     if (trackingEnabled()) {
