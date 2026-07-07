@@ -131,15 +131,20 @@ function sendTrackingEvent(name, payload = {}) {
   if (window.fbq) {
     try {
       const link = payload.link || "";
-      // Mapear a eventos estándar de Meta para mejor optimización de campañas
+      // Cada link dispara: 1) un evento estándar de Meta (mejor optimización de
+      // campañas) y 2) un evento personalizado único por link (para poder
+      // diferenciar en Events Manager / Ads Manager qué le interesó a cada
+      // visitante, ya que varios links comparten el mismo evento estándar).
       if (link.includes("wa.me") || link.includes("whatsapp")) {
         window.fbq("track", "Contact", { content_name: "WhatsApp" });
+        window.fbq("trackCustom", "ClickWhatsApp", { link });
       } else if (link.includes("inscripcion")) {
         window.fbq("track", "InitiateCheckout", {
           content_name: "Curso Integral de Fotografía",
           content_ids: ["curso-integral-fotografia"],
           num_items: 1,
         });
+        window.fbq("trackCustom", "ClickInscripcion", { link });
       } else if (link.includes("cursos")) {
         window.fbq("track", "ViewContent", {
           content_name: "Cursos de Fotografía",
@@ -147,8 +152,10 @@ function sendTrackingEvent(name, payload = {}) {
           content_ids: ["cursos-fotografia"],
           content_type: "product",
         });
+        window.fbq("trackCustom", "ClickCursos", { link });
       } else if (link.includes("instagram.com")) {
         window.fbq("track", "Contact", { content_name: "Instagram" });
+        window.fbq("trackCustom", "ClickInstagram", { link });
       } else {
         window.fbq("trackCustom", name, { link: link || null });
       }
