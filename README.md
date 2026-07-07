@@ -6,7 +6,18 @@ Archivos añadidos:
 
 - `index.html` — landing principal.
 - `css/styles.css` — estilos.
+- `css/tailwind.css` — CSS de Tailwind compilado (generado con `npm run build`, no editar a mano).
 - `js/script.js` — captura de eventos y envío a Pixel/endpoint.
+
+Build de Tailwind CSS
+
+El sitio usa [Tailwind CSS](https://tailwindcss.com/) compilado localmente (ya no se usa el CDN `cdn.tailwindcss.com`, que Tailwind desaconseja para producción).
+
+1. Instalar dependencias: `npm install`
+2. Compilar el CSS: `npm run build` (genera `css/tailwind.css` minificado a partir de `src/tailwind.css` y `tailwind.config.js`).
+3. El workflow de GitHub Actions (`.github/workflows/deploy.yml`) ejecuta `npm ci` y `npm run build` automáticamente antes de publicar en Pages.
+
+Si cambiás clases de Tailwind en `index.html`, `cursos/index.html` o `inscripcion/index.html`, volvé a correr `npm run build` para regenerar el CSS.
 
 Pasos rápidos
 
@@ -17,8 +28,8 @@ Pasos rápidos
 
 Nota sobre Meta Pixel y Advanced Matching:
 
-- `js/script.js` ya soporta inicializar el Meta Pixel solo después de que el usuario dé su consentimiento.
-- Si el usuario deja su email en el opt‑in, el frontend calculará un SHA‑256 del email (en minúsculas y trim) y lo enviará al Pixel como Advanced Matching (`em`) — de esta forma no se comparte el email en texto claro con Meta.
+- `js/script.js` inicializa el Meta Pixel siempre al cargar la página (PageView + tracking de clicks), sin requerir consentimiento previo, ya que no envía datos personales.
+- Si el usuario deja su email (formulario opcional del footer), se envía completo (texto plano) al endpoint configurado y también al Pixel como Advanced Matching (`em`) — Meta lo hashea internamente antes de transmitirlo.
 - Para habilitar el Pixel, poné tu Pixel ID en la constante `PIXEL_ID` dentro de `js/script.js` (p.ej. `2663900733992873`).
 - El Pixel enviará un PageView al inicializar y eventos `link_click` como eventos personalizados para facilitar el seguimiento en Facebook Events Manager.
 

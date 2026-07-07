@@ -1,0 +1,26 @@
+{
+  "name": "tdf_landing",
+  "version": "1.0.0",
+  "description": "Mini landing estática estilo Linktree para redirigir a contactos de Taller de Fotografía. Incluye captura básica de eventos de clicks y página para luego usar con Meta (Pixel) o un endpoint propio.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tailwindcss -i ./src/tailwind.css -o ./css/tailwind.css --minify",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tupacrojo/TDF_Landing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tupacrojo/TDF_Landing/issues"
+  },
+  "homepage": "https://github.com/tupacrojo/TDF_Landing#readme",
+  "devDependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "tailwindcss": "^3.4.19"
+  }
+}

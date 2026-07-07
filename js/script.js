@@ -33,6 +33,16 @@ function loadPixelScript() {
     t = b.createElement(e);
     t.async = !0;
     t.src = v;
+    // Detección de bloqueo (ad-blockers / tracking protection suelen bloquear
+    // este dominio). Si falla la carga, el Pixel Helper nunca detectará nada.
+    t.onload = function () {
+      console.info("[Meta Pixel] fbevents.js cargado correctamente.");
+    };
+    t.onerror = function () {
+      console.warn(
+        "[Meta Pixel] No se pudo cargar fbevents.js (probablemente bloqueado por un ad-blocker o protección de rastreo del navegador). El Pixel Helper no detectará eventos mientras esto ocurra.",
+      );
+    };
     s = b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t, s);
   })(
@@ -53,6 +63,7 @@ function initMetaPixel(id) {
     window.fbq("init", id);
     window.fbq("track", "PageView");
     pixelBaseInitialized = true;
+    console.info("[Meta Pixel] init + PageView disparados para ID", id);
   } catch (e) {
     console.warn("Error inicializando Meta Pixel", e);
   }

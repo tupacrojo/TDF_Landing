@@ -58,8 +58,8 @@
         }
         </script>
 
-    <!-- Tailwind CDN (dev-friendly). En producción preferir compilar CSS y referenciarlo localmente -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind CSS compilado (build de producción, ver package.json -> npm run build) -->
+    <link rel="stylesheet" href="css/tailwind.css" />
 
     <!-- Google Fonts / Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
@@ -67,25 +67,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-
-    <!-- Tailwind config (inline) -->
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#009440",
-                        "background-light": "#f5f8f7",
-                        "background-dark": "#0f2318",
-                    },
-                    fontFamily: {
-                        display: ["Inter", "sans-serif"],
-                    },
-                },
-            },
-        };
-    </script>
 
     <!-- Small inline fallback styles to keep layout readable if Tailwind/CDN fails -->
     <style>
