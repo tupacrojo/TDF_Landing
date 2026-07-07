@@ -55,9 +55,19 @@ function loadPixelScript() {
 
 // Se inicializa siempre al cargar la página (base tracking: PageView + clicks).
 // No requiere consentimiento porque no envía datos personales.
+// Si la página ya tiene el código base del Pixel inline en el <head> (como
+// index.html, cursos/index.html e inscripcion/index.html), window.fbq ya existe
+// y no volvemos a inicializar ni a disparar un PageView duplicado.
 let pixelBaseInitialized = false;
 function initMetaPixel(id) {
   if (!id || pixelBaseInitialized) return;
+  if (window.fbq) {
+    pixelBaseInitialized = true;
+    console.info(
+      "[Meta Pixel] Ya inicializado por el código base inline de la página.",
+    );
+    return;
+  }
   loadPixelScript();
   try {
     window.fbq("init", id);
