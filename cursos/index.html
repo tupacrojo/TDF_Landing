@@ -39,7 +39,8 @@
     <!-- Fin Meta Pixel Base Code -->
 </head>
 
-<body class="bg-slate-50 font-display text-slate-900 antialiased">
+<body class="bg-slate-50 font-display text-slate-900 antialiased"
+    data-tracking-endpoint="https://script.google.com/macros/s/AKfycbxRYHHQH0VxrbnCnF2X9mRdIdhw9qAhwbg1DhwhPMDMLn9sNrP4UvNEvUQxcStMUvtC/exec">
     <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
         <!-- Navigation -->
         <header
@@ -389,6 +390,8 @@
             });
         }
     </script>
+    <!-- Tracking global de clicks (todos los links/botones) hacia Meta Pixel -->
+    <script src="../js/script.js"></script>
 </body>
 
 </html>

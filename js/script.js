@@ -191,6 +191,52 @@ function attachClickTracking() {
   });
 }
 
+// Tracking genérico: registra CADA click en elementos interactivos de la
+// página (links, botones, inputs de envío, elementos con role="button" o con
+// data-track), no solo los que ya tienen `data-link`. Sirve para entender el
+// comportamiento completo de navegación y armar audiencias de segmentación en
+// Meta Ads a partir de eventos personalizados del Pixel.
+function attachGlobalClickTracking() {
+  document.addEventListener(
+    "click",
+    (ev) => {
+      if (!trackingEnabled()) return;
+
+      const el = ev.target.closest(
+        "a, button, input[type=submit], input[type=button], [role='button'], [data-track]",
+      );
+      if (!el) return;
+      // El click en elementos [data-link] ya se registra en attachClickTracking()
+      // con su propio mapeo a eventos estándar de Meta; evitamos duplicarlo.
+      if (el.hasAttribute("data-link")) return;
+
+      const label =
+        el.getAttribute("data-track") ||
+        el.getAttribute("aria-label") ||
+        (el.textContent || "").trim().slice(0, 80) ||
+        el.id ||
+        el.tagName.toLowerCase();
+
+      const payload = {
+        link: el.getAttribute("href") || null,
+        label,
+        tag: el.tagName.toLowerCase(),
+        id: el.id || null,
+        page: location.pathname,
+      };
+
+      sendTrackingEvent("click", payload);
+
+      if (window.fbq) {
+        try {
+          window.fbq("trackCustom", "Click", payload);
+        } catch (e) {}
+      }
+    },
+    true,
+  );
+}
+
 // Formulario opcional del footer: envía el email completo (texto plano) al
 // endpoint para poder contactar al interesado, y lo agrega al Pixel para
 // Advanced Matching. No bloquea nada ni es requisito para navegar.
@@ -242,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (email) addPixelAdvancedMatching(PIXEL_ID, email);
   }
   attachClickTracking();
+  attachGlobalClickTracking();
   setupNewsletterForm();
   setupTrackingToggle();
 });
