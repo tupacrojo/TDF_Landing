@@ -151,29 +151,6 @@
                         </div>
                     </div>
 
-                    <!-- Banner de consentimiento / opt-in (IDs compatibles con js/script.js) -->
-                    <div id="consent" class="w-full flex justify-center mt-2">
-                        <form id="consentForm"
-                            class="consent-form bg-white/5 p-4 rounded-lg w-full max-w-md flex flex-col gap-3 items-center">
-                            <label for="email" class="text-sm text-slate-300">Recibí novedades por email
-                                (opcional)</label>
-                            <input id="email" name="email" type="email" placeholder="tu@correo.com"
-                                class="w-full p-2 rounded-md bg-transparent border border-slate-700 text-slate-100" />
-                            <div class="consent-row text-sm text-slate-400 flex items-center gap-2">
-                                <label class="flex items-center gap-2"><input id="consentCheckbox" type="checkbox" />
-                                    Acepto recibir comunicaciones y doy consentimiento para registrar mi visita.</label>
-                            </div>
-                            <div class="consent-actions flex gap-3">
-                                <button type="submit"
-                                    class="group flex items-center justify-center h-10 sm:h-12 px-4 rounded-xl bg-primary text-white font-bold">Aceptar
-                                    y continuar</button>
-                                <button type="button" id="skipTracking"
-                                    class="group flex items-center justify-center h-10 sm:h-12 px-4 rounded-xl border border-primary/30 text-primary">Continuar
-                                    sin aceptarlo</button>
-                            </div>
-                        </form>
-                    </div>
-
                     <div class="flex w-full flex-col gap-4 mt-2">
 
                         <a class="group flex items-center justify-between w-full h-12 sm:h-14 px-6 rounded-xl bg-primary text-white font-bold text-base transition-transform hover:scale-[1.02] active:scale-[0.98]"
@@ -241,6 +218,19 @@
                 </div>
                 <p class="text-slate-400 dark:text-primary/40 text-xs md:text-sm">© 2026 Taller de Fotografía — Usá
                     estos enlaces para contactarnos.</p>
+
+                <!-- Preferencias secundarias: opcionales y no bloquean la navegación -->
+                <form id="newsletterForm" class="flex flex-wrap items-center justify-center gap-2 mt-2">
+                    <label for="email" class="text-slate-400 dark:text-primary/40 text-xs">Recibí novedades por
+                        email:</label>
+                    <input id="email" name="email" type="email" placeholder="tu@correo.com"
+                        class="p-1 rounded-md bg-transparent border border-slate-700 text-slate-500 dark:text-slate-300 text-xs" />
+                    <button type="submit"
+                        class="text-primary text-xs font-medium underline hover:no-underline">Enviar</button>
+                </form>
+                <button type="button" id="trackingToggle"
+                    class="text-slate-400 dark:text-primary/40 text-xs underline hover:text-primary transition-colors self-center">No
+                    registrar mi visita</button>
             </footer>
 
         </div>

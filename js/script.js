@@ -17,28 +17,9 @@ try {
   /* ignore for non-browser context */
 }
 
-// --- Util: SHA-256 hash (hex) usado para Advanced Matching ---
-async function sha256Hex(str) {
-  if (!str) return null;
-  try {
-    const s = str.trim().toLowerCase();
-    if (window.crypto && window.crypto.subtle && window.TextEncoder) {
-      const data = new TextEncoder().encode(s);
-      const hash = await window.crypto.subtle.digest("SHA-256", data);
-      return Array.from(new Uint8Array(hash))
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-    }
-  } catch (e) {
-    console.warn("No se pudo hashear el email:", e);
-  }
-  return null;
-}
-
-// --- Meta Pixel init (si se configura) ---
-// acepta optional hashedEmail (SHA-256 hex) para Advanced Matching
-function initMetaPixel(id, hashedEmail) {
-  if (!id) return;
+// --- Meta Pixel: carga del script base (una sola vez) ---
+function loadPixelScript() {
+  if (window.fbq) return;
   !(function (f, b, e, v, n, t, s) {
     if (f.fbq) return;
     n = f.fbq = function () {
@@ -60,23 +41,39 @@ function initMetaPixel(id, hashedEmail) {
     "script",
     "https://connect.facebook.net/en_US/fbevents.js",
   );
+}
 
+// Se inicializa siempre al cargar la página (base tracking: PageView + clicks).
+// No requiere consentimiento porque no envía datos personales.
+let pixelBaseInitialized = false;
+function initMetaPixel(id) {
+  if (!id || pixelBaseInitialized) return;
+  loadPixelScript();
   try {
-    if (hashedEmail) {
-      // Advanced Matching: enviar email hasheado
-      window.fbq("init", id, { em: hashedEmail });
-    } else {
-      window.fbq("init", id);
-    }
-    // Track a PageView inmediatamente al inicializar
-    window.fbq && window.fbq("track", "PageView");
+    window.fbq("init", id);
+    window.fbq("track", "PageView");
+    pixelBaseInitialized = true;
   } catch (e) {
     console.warn("Error inicializando Meta Pixel", e);
   }
 }
 
+// Sólo se llama cuando el usuario dio su email desde el formulario del footer:
+// agrega el email para Advanced Matching (el Pixel lo hashea internamente antes
+// de enviarlo a Meta, así que se pasa en texto plano).
+function addPixelAdvancedMatching(id, email) {
+  if (!id || !email) return;
+  loadPixelScript();
+  try {
+    window.fbq("init", id, { em: email });
+  } catch (e) {
+    console.warn("Error actualizando Advanced Matching del Pixel", e);
+  }
+}
+
 // --- Envío de eventos al endpoint configurado ---
 function sendTrackingEvent(name, payload = {}) {
+  if (!trackingEnabled()) return;
   const data = {
     event: name,
     timestamp: new Date().toISOString(),
@@ -138,122 +135,84 @@ function sendTrackingEvent(name, payload = {}) {
   }
 }
 
-// --- Consentimiento: sólo trackear si el usuario dio su consentimiento explícito ---
-function hasConsent() {
-  return localStorage.getItem("tdf_consent") === "yes";
+// --- Preferencia de privacidad: modelo opt-out ---
+// Por defecto el tracking está activo (para saber quién visita y qué le interesa).
+// El usuario puede desactivarlo con un control discreto en el footer.
+function trackingEnabled() {
+  return localStorage.getItem("tdf_tracking_optout") !== "yes";
 }
 
-function setConsent(value, email = null) {
-  localStorage.setItem("tdf_consent", value ? "yes" : "no");
-  // guardamos el email hasheado (si se provee) para advanced matching
-  if (email) localStorage.setItem("tdf_email_hashed", email);
+function setTrackingOptOut(optOut) {
+  localStorage.setItem("tdf_tracking_optout", optOut ? "yes" : "no");
 }
 
-// Adjuntar tracking a enlaces (se ejecuta cuando hay consentimiento o para logs locales)
+// Adjuntar tracking a enlaces: se ejecuta siempre para saber qué links generan
+// interés, salvo que el usuario haya desactivado el registro de su visita.
 function attachClickTracking() {
   document.querySelectorAll("[data-link]").forEach((el) => {
     el.addEventListener("click", (ev) => {
+      if (!trackingEnabled()) return;
       const link = el.getAttribute("data-link") || el.href;
-      // enviar evento sólo si tenemos consentimiento, si no, guardamos localmente
       const payload = { link };
-      // si tenemos email hasheado en el storage, incluirlo para matching (no enviamos email en claro)
       try {
-        const hashed = localStorage.getItem("tdf_email_hashed");
-        if (hashed) payload.email = hashed;
+        const email = localStorage.getItem("tdf_email");
+        if (email) payload.email = email;
       } catch (e) {}
-      if (hasConsent()) {
-        // opcional: intentar obtener geolocalización (bajo permiso)
-        try {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              (pos) => {
-                payload.geo = {
-                  lat: pos.coords.latitude,
-                  lon: pos.coords.longitude,
-                  accuracy: pos.coords.accuracy,
-                };
-                sendTrackingEvent("link_click", payload);
-              },
-              () => {
-                sendTrackingEvent("link_click", payload);
-              },
-              { timeout: 3000 },
-            );
-          } else {
-            sendTrackingEvent("link_click", payload);
-          }
-        } catch (e) {
-          sendTrackingEvent("link_click", payload);
-        }
-      } else {
-        // sin consentimiento, solo logging local anónimo
-        try {
-          const stats = JSON.parse(localStorage.getItem("tdf_stats") || "{}");
-          stats[link] = (stats[link] || 0) + 1;
-          localStorage.setItem("tdf_stats", JSON.stringify(stats));
-        } catch (e) {}
-      }
+      sendTrackingEvent("link_click", payload);
     });
   });
 }
 
-// Manejo del formulario de consentimiento
-function setupConsentForm() {
-  const consentEl = document.getElementById("consent");
-  const form = document.getElementById("consentForm");
-  const skip = document.getElementById("skipTracking");
-  if (!consentEl) return;
-
-  // Si ya dio consentimiento, ocultamos banner y re-inicializamos Pixel con el email hasheado si existe
-  if (hasConsent()) {
-    consentEl.style.display = "none";
-    (async function () {
-      try {
-        const hashed = localStorage.getItem("tdf_email_hashed") || null;
-        initMetaPixel(PIXEL_ID, hashed);
-        sendTrackingEvent("page_view", { email: hashed });
-      } catch (e) {
-        console.warn(e);
-      }
-      attachClickTracking();
-    })();
-    return;
-  }
-  form.addEventListener("submit", async (ev) => {
+// Formulario opcional del footer: envía el email completo (texto plano) al
+// endpoint para poder contactar al interesado, y lo agrega al Pixel para
+// Advanced Matching. No bloquea nada ni es requisito para navegar.
+function setupNewsletterForm() {
+  const form = document.getElementById("newsletterForm");
+  if (!form) return;
+  form.addEventListener("submit", (ev) => {
     ev.preventDefault();
-    const emailRaw = document.getElementById("email").value || null;
-    const checked = document.getElementById("consentCheckbox").checked;
-    if (!checked) {
-      alert("Debes aceptar para continuar con el seguimiento.");
-      return;
+    const emailInput = document.getElementById("email");
+    const email = emailInput && emailInput.value ? emailInput.value.trim() : null;
+    if (!email) return;
+    localStorage.setItem("tdf_email", email);
+    if (trackingEnabled()) {
+      addPixelAdvancedMatching(PIXEL_ID, email);
+      sendTrackingEvent("newsletter_optin", { email });
     }
-    // calcular hash del email (si existe)
-    let hashed = null;
-    if (emailRaw) {
-      try {
-        hashed = await sha256Hex(emailRaw);
-      } catch (e) {
-        hashed = null;
-      }
-    }
-    setConsent(true, hashed);
-    // enviar evento de opt-in (no enviamos email en texto claro)
-    sendTrackingEvent("consent_given", { email: hashed });
-    initMetaPixel(PIXEL_ID, hashed);
-    consentEl.style.display = "none";
-    attachClickTracking();
-  });
-
-  skip.addEventListener("click", () => {
-    setConsent(false);
-    consentEl.style.display = "none";
-    // attach click tracking but in local-only mode
-    attachClickTracking();
+    if (emailInput) emailInput.value = "";
+    alert("¡Gracias! Vas a recibir novedades por email.");
   });
 }
 
-// Inicialización
+// Control discreto para desactivar/activar el registro de la visita.
+// El tracking está activo por defecto; esto es sólo una opción secundaria.
+function setupTrackingToggle() {
+  const btn = document.getElementById("trackingToggle");
+  if (!btn) return;
+
+  const updateLabel = () => {
+    btn.textContent = trackingEnabled()
+      ? "No registrar mi visita"
+      : "Habilitar registro de mi visita";
+  };
+  updateLabel();
+
+  btn.addEventListener("click", () => {
+    setTrackingOptOut(trackingEnabled());
+    updateLabel();
+  });
+}
+
+// Inicialización: el tracking (Pixel + clicks) corre siempre por defecto,
+// salvo que el usuario haya elegido desactivarlo previamente.
 document.addEventListener("DOMContentLoaded", () => {
-  // No enviamos page_view hasta que el usuario acepte; si ya aceptó, el formulario se oculta y se dispara.
-  setupConsentForm();
+  if (trackingEnabled()) {
+    initMetaPixel(PIXEL_ID);
+    sendTrackingEvent("page_view");
+    const email = localStorage.getItem("tdf_email") || null;
+    if (email) addPixelAdvancedMatching(PIXEL_ID, email);
+  }
+  attachClickTracking();
+  setupNewsletterForm();
+  setupTrackingToggle();
 });
